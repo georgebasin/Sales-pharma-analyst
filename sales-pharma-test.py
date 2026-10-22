@@ -1,10 +1,14 @@
 import pandas as pd
 import numpy as np
-from openai import OpenAI
 
-# Inicializa el cliente de OpenAI (asegúrate de tener tu API Key configurada)
-# Puedes pasarla directamente api_key="tu_api_key" o configurarla como variable de entorno OPENAI_API_KEY
-client = OpenAI(api_key="TU_API_KEY_AQUI")
+import anthropic
+client = anthropic.Anthropic(api_key="TU_API_KEY")
+response = client.messages.create(
+    model="claude-3-5-sonnet-20241022",
+    max_tokens=2000,
+    messages=[{"role": "user", "content": prompt_usuario}]
+)
+print(response.content[0].text)
 
 def procesar_datos_ventas(file_path):
     """Paso 1: Parsea y limpia el CSV/Excel extrayendo las métricas clave."""
